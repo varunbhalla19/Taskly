@@ -1,0 +1,200 @@
+
+*{
+    box-sizing: border-box;
+    /* font-family: 'Jost'; */
+    font-family: 'MuseoModerno';
+}
+h1 , p , h2 , ul {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    margin: 0;
+    height: 100vh;
+    background-color: #a994a7 ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover{
+    background-color: #def ;
+    height: 100vh;
+    border-radius: 1rem;
+    width: 350px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.cover::-webkit-scrollbar{
+    display: none;
+}
+
+.calCover {
+    padding: 0.5rem ;
+}
+
+.calendar-card{
+    box-shadow: none;
+    background-color: transparent ;
+}
+
+.headingCover{
+    padding: 0.5rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.heading-title{
+    color: #345;
+}
+
+.todoCover {
+    height: 400px;
+    width: 100%;
+    background-color: #345 ;
+    /* margin-top: 0.5rem ; */
+    border-radius: 1rem;
+}
+.heading-setting {
+    width: 36px;
+    height: 36px;
+    padding: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end ;
+    justify-content: space-evenly ;
+    cursor: pointer;
+}
+.h-s-menu{
+    width: 100%;
+    height: 4px;
+    border-radius: 1rem;
+    background-color: #345;
+}
+.hsm-a{
+    width: 60%;
+}
+
+.heading-setting > img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.todoCover {
+    padding: 1rem ;
+    flex-grow: 1;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.todoHead {
+    /* padding: 0rem 1rem; */
+    color: #def ;
+}
+
+.todo-tasks{
+    margin-top: 1rem;
+    /* padding: 1rem 0 0 ; */
+    flex-grow: 1;
+    color: #def;
+}
+
+.todo-task-cover{
+    position: relative;
+}
+
+.todo-task{
+    position: relative;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid whitesmoke;
+    background-color: tomato;
+    z-index: 2;
+}
+
+.td-title{
+    margin-bottom: 0.5rem;
+}
+
+.td-time {
+    display: flex;
+    font-size: 0.5rem;
+}
+.td-time > * {
+    font-family: 'Jost';
+}
+
+.td-icons {
+    height: 100%;
+    position: absolute;
+    right: 16px ;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.td-delete , .td-edit {
+    width: 30px;
+    height: 30px;
+}
+
+.td-delete > img , .td-edit > img {
+    width: 100%;
+    height: 100%;
+}
+
+.td-more{
+    position: absolute;
+    top: 0;
+    right: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+}
+
+.td-m{
+    height: 5px;
+    width: 40px;
+    width: 5px;
+    margin: 4px 0;
+    background-color: whitesmoke;
+    border-radius: 1rem;
+    transform-origin: left;
+}
+
+.tdma{
+    transform: translateY(-7.5px) rotate(45deg);
+}
+
+.tdmb{
+    transform: translateY(+7.5px) rotate(-45deg);
+}
+
+
+.add-task-btn{
+    position: absolute ;
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    padding: 1rem;
+    outline: none;
+    border: none;
+    bottom: 1rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+.add-task-btn > img {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,203 @@
+
+.calendar-card {
+    height: 320px;
+    width: 320px;
+    background-color: rgb(238, 240, 255);
+    border-radius: 16px;
+    box-shadow: 0px 2px 10px -3px rgba(0, 0, 0, 0.548);
+    display: grid;
+    grid-template-rows: 3fr 2fr 15fr;
+    transition: height 400ms ease  ;
+}
+
+.calendar-card.fit{
+    min-width: 320px;
+    width: 100% ;    
+    /* padding: 0 0.5rem ; */
+}
+
+.calendar-card.weekview {
+    height: 150px ;
+    grid-template-rows: 4fr 3fr 3fr;
+}
+
+.calendar-head {
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between ;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.calendar-heading{
+    display: flex;
+    align-items: center;
+}
+
+.calendar-arrows{
+    display: flex;
+}
+
+.calendar-arrows > div {
+    margin: 0 0.5rem;
+    padding: 6px ;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-arrows>div:hover   {
+    background-color: #345;
+    color: #def;
+}
+
+.calendar-arrows>div:hover > svg {
+    fill: white;
+}
+
+
+#weekbtn > svg , #monthbtn > svg {
+    height: 100%;
+    width: 100%;
+    display: block;
+}
+
+.calMonth {
+    width: 100px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    margin: 0 0.25rem;
+}
+
+.calMonth:hover {
+    background-color: #234;
+    color: #def;
+}
+
+.ar {
+    width: 12px ;
+    height: 12px ;
+    cursor: pointer;
+}
+
+.arleft {
+    transform: rotate(90deg);
+}
+
+.arright {
+    transform: rotate(-90deg);
+}
+
+.calweekDays {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(7, 1fr);
+    font-size: 0px;
+}
+
+.calMonthDay,
+.calWeekDay {
+    font-size: 0.6rem;
+    color: #345;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.calMonthDay:hover {
+    border-radius: 50px;
+    border: 1px solid #234;
+}
+
+
+.calMonthCover {
+    border-radius: 0 0 1rem 1rem;
+}
+
+.calMonthCover.weekview{
+    overflow-x: hidden ;
+    overflow-y: hidden;
+    padding-bottom: 5px;
+}
+
+.calMonthCalendar {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
+    grid-template-columns: repeat(7, 1fr);
+    transition: opacity 300ms ease;
+}
+
+.weekview.calMonthCalendar{
+    width: 600%;
+    grid-template-columns: repeat(42,1fr);
+    grid-template-rows: 1fr;
+    transition: transform 300ms ease ;
+}
+
+
+.calMonthCover {
+    transition: opacity 250ms ease;
+}
+
+.today{
+    border-radius: 50px;
+    background-color: #234;
+    color: #def;
+}
+
+.gray {
+    color: #9ab;
+}
+
+.gray.today {
+    background-color: transparent ;
+    border: 1px solid #234 ;
+}
+
+.fade {
+    opacity: 0;
+}
+
+.selected > svg {
+    fill: #defdef  ;
+}
+
+.selected {
+    background-color: #345;
+    color: whitesmoke;
+}
+
+.show {
+    animation: sho 400ms ease 200ms forwards;
+}
+
+@keyframes sho {
+    to {
+        opacity: 1;
+    }
+}
+
+.none {
+    display: none;
+}
+
+.shoshoc{
+    animation: shosho 400ms linear forwards;
+}
+
+@keyframes shosho {
+    100% {
+        opacity: 1;
+    }
+    0% , 50% {
+        opacity: 0;
+    }
+}
