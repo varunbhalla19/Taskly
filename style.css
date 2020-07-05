@@ -108,15 +108,21 @@ body{
 
 .todo-task-cover{
     position: relative;
+    margin-bottom: 1rem;
 }
 
 .todo-task{
     position: relative;
     padding: 1rem;
     border-radius: 1rem;
-    border: 1px solid whitesmoke;
-    background-color: tomato;
+    /* border: 1px solid whitesmoke; */
+    background-color: #345 ;
     z-index: 2;
+    transition: transform 0.4s cubic-bezier(0.02, 0.6, 0.51, 1.56) ;
+}
+
+.todo-task.shift{
+    transform: translateX(-70px);
 }
 
 .td-title{
@@ -134,16 +140,18 @@ body{
 .td-icons {
     height: 100%;
     position: absolute;
-    right: 16px ;
+    right: 12px ;
     top: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    padding: 0 0.5rem;
 }
 
 .td-delete , .td-edit {
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 .td-delete > img , .td-edit > img {
@@ -153,22 +161,30 @@ body{
 
 .td-more{
     position: absolute;
-    top: 0;
-    right: 20px;
-    height: 100%;
+    top: 50% ;
+    right: 15px;
+    height: 50%;
+    width: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center ;
+    align-items: center ;
+    transform: translateY(-50%);
+    cursor: pointer;
 }
 
 .td-m{
     height: 5px;
     width: 40px;
-    width: 5px;
     margin: 4px 0;
     background-color: whitesmoke;
-    border-radius: 1rem;
+    border-radius: 2rem;
     transform-origin: left;
+    transition: width 0.3s ease ;
+}
+
+.td-m.short{
+    width: 5px;
 }
 
 .tdma{
