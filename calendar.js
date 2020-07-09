@@ -1,7 +1,16 @@
 const calPick = {};
+
 calPick.create = start;
 
-function start() {
+function start( dateSelected ) {
+
+    function getDate( ev ) {
+        console.log( this.custom_date_prop );
+    }    
+
+    if(!dateSelected){
+        dateSelected = getDate ;
+    }
 
     const calendarObjects = {
         pCalMonth: null, calMonthCover: null, leftBut: null, rightBut: null, calMonthDays: null,
@@ -119,7 +128,7 @@ function start() {
 
             md.classList.add('calMonthDay');
 
-            md.addEventListener('click', getDate);
+            md.addEventListener('click', dateSelected );
 
             customDate.setDate(dateDif++);
 
@@ -275,12 +284,6 @@ function start() {
 
         });
     }
-
-
-    function getDate(ev) {
-        console.log(this.custom_date_prop);
-    }
-
 
     function weekCalView(ev) {
 

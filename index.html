@@ -25,37 +25,107 @@
             <div class="calendar-card fit"></div>
         </div>
         <div class="todoCover">
-            <h2 class="todoHead">Today</h2>
-            <div class="todo-tasks">
-                
-                <div class="todo-task-cover">
-                    <div class="todo-task">
-                        <p class="td-title">Webinar</p>
-                        <div class="td-time">
-                            <p class="td-time-from">8:00 AM</p> - <p class="td-time-to">10:00 AM</p>
+            <div class="todoTaskScreen">
+
+                <h2 class="todoHead">Today</h2>
+                <div class="todo-tasks">
+
+                    <div class="todo-task-cover">
+                        <div class="todo-task">
+                            <p class="td-title">Workout/Cycling</p>
+                            <div class="td-time">
+                                <p class="td-time-from">6:00 PM</p> - <p class="td-time-to">07:00 PM</p>
+                            </div>
+                            <div class="td-more">
+                                <div class="td-m tdma short "></div>
+                                <div class="td-m tdmb short"></div>
+                            </div>
                         </div>
-                        <div class="td-more">
-                            <div class="td-m tdma short "></div>
-                            <div class="td-m tdmb short"></div>
+                        <div class="td-icons">
+                            <div class="td-delete">
+                                <img src="./delete-24px.svg" alt="">
+                            </div>
+                            <div class="td-edit">
+                                <img src="./edit-24px.svg" alt="" srcset="">
+                            </div>
                         </div>
                     </div>
-                    <div class="td-icons">
-                        <div class="td-delete">
-                            <img src="./delete-24px.svg" alt="">
-                        </div>
-                        <div class="td-edit">
-                            <img src="./edit-24px.svg" alt="" srcset="">
-                        </div>
-                    </div>
+
+
                 </div>
-                
             </div>
+
+            <div class="addTaskScreen shrink ">
+                <div class="addTaskForm">
+                    <form action="">
+                        <div class="add-date">
+                            <p class="p-add-date">Date</p>
+                            <div class="select-date">
+                                <p class="selected-date" id="real-date">07/07/2020</p>
+                                <div id="editSelectedDate">Edit</div>
+                            </div>
+                        </div>
+                        <div class="add-title">
+                            <p class="p-add-title">Title</p>
+                            <input type="text" spellcheck="false" name="task-title" id="taskTit">
+                        </div>
+                        <div class="add-detail">
+                            <p class="p-add-detail">Detail</p>
+                            <textarea name="task-detail" style="resize: none;" spellcheck="false" id="taskDet"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="add-time">
+                            <p class="p-add-time">Time</p>
+                            <div class="add-timings">
+                                <input type="time" name="" id="">
+                                <p>to</p>
+                                <input type="time" name="" id="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
-        <!-- <button class="add-task-btn" >
-            <img src="./add.svg" alt="" srcset="">
-        </button> -->
+
+        <div id="addTaskBtn">
+            <svg height="426.66667pt" viewBox="0 0 426.66667 426.66667" width="426.66667pt"
+                xmlns="http://www.w3.org/2000/svg">
+                <path id="addTaskSvg"
+                    d="m405.332031 192h-170.664062v-170.667969c0-11.773437-9.558594-21.332031-21.335938-21.332031-11.773437 0-21.332031 9.558594-21.332031 21.332031v170.667969h-170.667969c-11.773437 0-21.332031 9.558594-21.332031 21.332031 0 11.777344 9.558594 21.335938 21.332031 21.335938h170.667969v170.664062c0 11.777344 9.558594 21.335938 21.332031 21.335938 11.777344 0 21.335938-9.558594 21.335938-21.335938v-170.664062h170.664062c11.777344 0 21.335938-9.558594 21.335938-21.335938 0-11.773437-9.558594-21.332031-21.335938-21.332031zm0 0" />
+            </svg>
+        </div>
+     
+        <div class="todoDarkScreen shrink"></div>
+
+        <div id="addTaskDoneBtn" class="shrink" >
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path id="addTaskDoneBtnSvg" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z" /></svg>
+        </div>
+
     </div>
 
+    <div class="todo-task-cover">
+        <div class="todo-task">
+            <p class="td-title">Workout/Cycling</p>
+            <div class="td-time">
+                <p class="td-time-from">6:00 PM</p> - <p class="td-time-to">07:00 PM</p>
+            </div>
+            <div class="td-more">
+                <div class="td-m tdma short "></div>
+                <div class="td-m tdmb short"></div>
+            </div>
+        </div>
+        <div class="td-icons">
+            <div class="td-delete">
+                <img src="./delete-24px.svg" alt="">
+            </div>
+            <div class="td-edit">
+                <img src="./edit-24px.svg" alt="" srcset="">
+            </div>
+        </div>
+    </div>
 
     <script src="./calendar.js"></script>
     <script src="./app.js"></script>
