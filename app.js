@@ -1,24 +1,32 @@
-const todoTaskScreen = document.querySelector('.todoDarkScreen');
-const taskbeingAdded = { value: false, dateVal: null, dateStr: null, el: null };
+const todoDarkScreen = document.querySelector('.todoDarkScreen');
+
+const taskbeingAdded = { value: false, dateVal: new Date(), dateStr: dateToStr(new Date()), el: null, cover: false };
+
+const helper = {
+    selectedTaskDate : dateToStr(new Date()) 
+}
 
 const moreOptions = document.querySelectorAll('.td-more');
 
 const heading = document.querySelector('.headingCover')
 
-const taskList = [
-    {
-        title: 'Webinar',
-        timeFrom: '09:00AM',
-        timeTo: '11:00AM'
-    },
-    {
-        title: 'Rest Api Development',
-        timeFrom: '01:30PM',
-        timeTo: '04:00PM'
-    },
-];
+const taskLists = {
+    [helper.selectedTaskDate]: [
+        {
+            title: 'Webinar',
+            timeFrom: '09:00AM',
+            timeTo: '11:00AM'
+        },
+        {
+            title: 'Rest Api Development',
+            timeFrom: '01:30PM',
+            timeTo: '04:00PM'
+        },
+    ]
+};
 
 
+// fetch('tasks.json').then(res => res.json()).then(console.log)
 
 
 function dateSelected(ev, el) {
@@ -26,7 +34,11 @@ function dateSelected(ev, el) {
     console.log('el is ', ev.target.custom_date_prop);
     if (taskbeingAdded.value) {
         taskbeingAdded.dateVal = realDate;
+        taskbeingAdded.dateStr = dateStr;
         taskbeingAdded.el.textContent = dateStr;
+    } else {
+        helper.selectedTaskDate = dateStr ;
+        showTask() ;
     }
 }
 
@@ -40,11 +52,6 @@ function showMoreOptions(el) {
     el.parentElement.classList.toggle('shift');
 }
 
-// moreOptions.forEach(el => {
-//     el.addEventListener('click', ev => {
-
-//     })
-// });
 
 const addTaskScreen = document.querySelector('.addTaskScreen');
 
@@ -54,45 +61,61 @@ editSelectedDate.addEventListener('click', function (ev) {
         calPick.showMonth();
         taskbeingAdded.value = true;
         this.textContent = 'Done';
-        todoTaskScreen.classList.add('shrink');
+        todoDarkScreen.classList.remove('show');
         taskbeingAdded.el = this.previousElementSibling;
     } else {
-        calPick.showWeek();
-        taskbeingAdded.value = false;
-        this.textContent = 'Edit';
-        todoTaskScreen.classList.remove('shrink');
-
+        dateDone(this);
+        todoDarkScreen.classList.add('show');
     }
-
     console.log(this.previousElementSibling);
-
 });
 
 
+function dateDone(el = editSelectedDate) {
+    calPick.showWeek();
+    taskbeingAdded.value = false;
+    el.textContent = 'Edit';
+}
 
 
 addTaskBtn.addEventListener('click', el => {
     addTaskScreen.classList.toggle('shrink');
-    todoTaskScreen.classList.toggle('shrink');
-    // heading.classList.toggle('none') ;
     addTaskBtn.classList.toggle('shrink');
     addTaskDoneBtn.classList.toggle('shrink');
+
+    if (taskbeingAdded.cover) {
+        document.forms[0].reset();
+        todoDarkScreen.classList.remove('show');
+        taskbeingAdded.cover = false;
+        dateDone();
+    } else {
+        taskbeingAdded.cover = true
+        todoDarkScreen.classList.add('show');
+    }
     calPick.showWeek()
 });
+
 
 const todoTaskCover = document.querySelector('body > .todo-task-cover');
 
 const todoParentCover = document.querySelector('.todo-tasks')
 
-todoParentCover.addEventListener( 'click' , ev => {
+todoParentCover.addEventListener('click', ev => {
     if (ev.target.classList.contains('td-more')) {
-        showMoreOptions(ev.target) ;
+        showMoreOptions(ev.target);
     }
 })
 
 console.log(todoTaskCover);
 
-taskList.forEach(createTask);
+function showTask ( ) {
+    todoParentCover.innerHTML = "" ;
+    if(taskLists[helper.selectedTaskDate])
+       taskLists[helper.selectedTaskDate].forEach(createTask);
+}
+
+showTask() ;
+
 
 function createTask(task) {
 
@@ -102,8 +125,30 @@ function createTask(task) {
     timings.firstElementChild.textContent = task.timeFrom;
     timings.lastElementChild.textContent = task.timeTo;
 
-    // console.log(taskCover) ;
-
     todoParentCover.append(taskCover.parentElement)
 
 }
+
+
+addTaskDoneBtn.addEventListener('click', function (ev) {
+    let data = new FormData(document.forms[0]);
+    let title = data.get('taskTitle'), detail = data.get('taskDetail'), timeFrom = data.get('timeFrom'), timeTo = data.get('timeTo');
+
+    console.log(title, detail, timeFrom, timeTo, taskbeingAdded.dateStr);
+
+    let task = {title , timeFrom , timeTo }
+
+    if( taskLists[taskbeingAdded.dateStr] ) {
+        taskLists[taskbeingAdded.dateStr].push(task)
+    } else {
+        taskLists[taskbeingAdded.dateStr] = [task] ;
+    }
+    document.forms[0].reset() ;
+
+});
+
+function dateToStr(date) {
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+}
+
+

@@ -134,7 +134,7 @@ function start( dateSelected ) {
 
             md.textContent = customDate.getDate();
 
-            md.custom_date = `${customDate.getDate()}/${customDate.getMonth()}/${customDate.getFullYear()}`;
+            md.custom_date = `${customDate.getDate()}/${customDate.getMonth()+1}/${customDate.getFullYear()}`;
             md.custom_date_prop = customDate;
 
             if (customDate.getMonth() !== newDate.getMonth()) {
