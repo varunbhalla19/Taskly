@@ -3,7 +3,7 @@ const todoDarkScreen = document.querySelector('.todoDarkScreen');
 const taskbeingAdded = { value: false, dateVal: new Date(), dateStr: dateToStr(new Date()), el: null, cover: false };
 
 const helper = {
-    selectedTaskDate : dateToStr(new Date()) 
+    selectedTaskDate: dateToStr(new Date()), today: dateToStr(new Date()), todayDate: new Date()
 }
 
 const moreOptions = document.querySelectorAll('.td-more');
@@ -13,14 +13,26 @@ const heading = document.querySelector('.headingCover')
 const taskLists = {
     [helper.selectedTaskDate]: [
         {
-            title: 'Webinar',
-            timeFrom: '09:00AM',
-            timeTo: '11:00AM'
+            title: 'Cycling',
+            timeFrom: '18:30',
+            timeTo: '20:00',
+            id: 'Cycling18:3020:00',
+            date: helper.selectedTaskDate
+
         },
         {
             title: 'Rest Api Development',
-            timeFrom: '01:30PM',
-            timeTo: '04:00PM'
+            timeFrom: '13:30',
+            timeTo: '16:00',
+            id: 'Rest Api Development13:3016:00',
+            date: helper.selectedTaskDate
+
+        }, {
+            title: 'Webinar',
+            timeFrom: '09:00',
+            timeTo: '11:00',
+            id: 'Webinar09:0011:00',
+            date: helper.selectedTaskDate
         },
     ]
 };
@@ -28,19 +40,34 @@ const taskLists = {
 
 // fetch('tasks.json').then(res => res.json()).then(console.log)
 
+const todoTaskCover = document.querySelector('body > .todo-task-cover');
+
+const todoParentCover = document.querySelector('.todo-tasks');
+
+let todoHeading = todoParentCover.previousElementSibling;
 
 function dateSelected(ev, el) {
     let realDate = ev.target.custom_date_prop, dateStr = ev.target.custom_date;
-    console.log('el is ', ev.target.custom_date_prop);
+    // console.log('el is ', ev.target.custom_date_prop);
     if (taskbeingAdded.value) {
+        if (realDate < helper.todayDate) {
+            return;
+        }
+
         taskbeingAdded.dateVal = realDate;
         taskbeingAdded.dateStr = dateStr;
         taskbeingAdded.el.textContent = dateStr;
     } else {
-        helper.selectedTaskDate = dateStr ;
-        showTask() ;
+        helper.selectedTaskDate = dateStr;
+        if (dateStr === helper.today) {
+            todoHeading.textContent = 'Today'
+        } else {
+            todoHeading.textContent = dateStr;
+        }
+        showTask(helper.selectedTaskDate);
     }
 }
+
 
 
 calPick.create(dateSelected);
@@ -64,17 +91,21 @@ editSelectedDate.addEventListener('click', function (ev) {
         todoDarkScreen.classList.remove('show');
         taskbeingAdded.el = this.previousElementSibling;
     } else {
-        dateDone(this);
+        dateDone();
         todoDarkScreen.classList.add('show');
     }
     console.log(this.previousElementSibling);
 });
 
+[taskTit, taskDet].forEach(el => el.addEventListener('focus', ev => dateDone(true)))
 
-function dateDone(el = editSelectedDate) {
+function dateDone(fromInp) {
+    if (fromInp) {
+        todoDarkScreen.classList.add('show');
+    }
     calPick.showWeek();
     taskbeingAdded.value = false;
-    el.textContent = 'Edit';
+    editSelectedDate.textContent = 'Edit';
 }
 
 
@@ -96,38 +127,55 @@ addTaskBtn.addEventListener('click', el => {
 });
 
 
-const todoTaskCover = document.querySelector('body > .todo-task-cover');
 
-const todoParentCover = document.querySelector('.todo-tasks')
 
 todoParentCover.addEventListener('click', ev => {
     if (ev.target.classList.contains('td-more')) {
         showMoreOptions(ev.target);
     }
+    if (ev.target.classList.contains('td-delete')) {
+        console.log('delete task');
+        let task = ev.target.parentElement.previousElementSibling;
+        deleteTask(task);
+    }
 })
 
-console.log(todoTaskCover);
-
-function showTask ( ) {
-    todoParentCover.innerHTML = "" ;
-    if(taskLists[helper.selectedTaskDate])
-       taskLists[helper.selectedTaskDate].forEach(createTask);
+function deleteTask(task) {
+    console.log(task.taskId, task.date);
+    taskLists[task.date] = taskLists[task.date].filter(ts => ts.id !== task.taskId);
+    // showTask(helper.selectedTaskDate) ;    
+    task.parentElement.remove();
 }
 
-showTask() ;
+function showTask(givenDate) {
+    todoParentCover.innerHTML = "";
+    console.log('selected date => ', givenDate);
+    if (taskLists[givenDate]) {
+        if (taskLists[givenDate].length == 1) {
+            createTask(taskLists[givenDate][0]);
+            return;
+        }
+        sortByTime(taskLists[givenDate])
+        taskLists[givenDate].forEach(createTask);
+    }
+}
+
+showTask(helper.selectedTaskDate);
 
 
 function createTask(task) {
 
     let taskCover = todoTaskCover.cloneNode(true).firstElementChild;
     taskCover.firstElementChild.textContent = task.title;
+    taskCover.taskId = task.id;
+    taskCover.date = task.date;
     let timings = taskCover.firstElementChild.nextElementSibling;
     timings.firstElementChild.textContent = task.timeFrom;
     timings.lastElementChild.textContent = task.timeTo;
 
-    todoParentCover.append(taskCover.parentElement)
-
+    todoParentCover.append(taskCover.parentElement);
 }
+
 
 
 addTaskDoneBtn.addEventListener('click', function (ev) {
@@ -136,19 +184,45 @@ addTaskDoneBtn.addEventListener('click', function (ev) {
 
     console.log(title, detail, timeFrom, timeTo, taskbeingAdded.dateStr);
 
-    let task = {title , timeFrom , timeTo }
+    if (!(title.length && timeFrom && timeTo)) return;
 
-    if( taskLists[taskbeingAdded.dateStr] ) {
+    if (((helper.today == taskbeingAdded.dateStr) && (timeFrom <= (`${(new Date()).getHours()}:${(new Date()).getMinutes()}`))) || (timeTo <= timeFrom)) {
+        console.log('Invalid Time');
+        timeSelectP.classList.add('invalid');
+        return;
+    } else {
+        timeSelectP.classList.remove('invalid');
+    }
+
+    let task = { title, timeFrom, timeTo }
+
+    task.id = `${title}${timeFrom}${timeTo}`;
+    task.date = taskbeingAdded.dateStr;
+
+    if (taskLists[taskbeingAdded.dateStr]) {
         taskLists[taskbeingAdded.dateStr].push(task)
     } else {
-        taskLists[taskbeingAdded.dateStr] = [task] ;
+        taskLists[taskbeingAdded.dateStr] = [task];
     }
-    document.forms[0].reset() ;
+    sortByTime(taskLists[taskbeingAdded.dateStr]);
+    document.forms[0].reset();
+
+    if (taskbeingAdded.dateStr === helper.selectedTaskDate) {
+        showTask(taskbeingAdded.dateStr);
+    }
 
 });
 
 function dateToStr(date) {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+}
+
+
+function sortByTime(ar) {
+    ar.sort((a, b) => {
+        if (a.timeFrom < b.timeFrom) return -1;
+        return 0;
+    })
 }
 
 

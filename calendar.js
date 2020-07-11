@@ -264,7 +264,7 @@ function start( dateSelected ) {
 
             el.textContent = customDate.getDate();
 
-            el.custom_date = `${customDate.getDate()}/${customDate.getMonth()}/${customDate.getFullYear()}`;
+            el.custom_date = `${customDate.getDate()}/${customDate.getMonth()+1}/${customDate.getFullYear()}`;
 
             el.custom_date_prop = customDate;
 
