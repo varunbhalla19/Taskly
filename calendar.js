@@ -2,14 +2,14 @@ const calPick = {};
 
 calPick.create = start;
 
-function start( dateSelected ) {
+function start(argObj) {
 
-    function getDate( ev ) {
-        console.log( this.custom_date_prop );
-    }    
+    function getDate(ev) {
+        console.log(this.custom_date_prop);
+    }
 
-    if(!dateSelected){
-        dateSelected = getDate ;
+    if (!argObj.evListener) {
+        dateSelected = getDate;
     }
 
     const calendarObjects = {
@@ -40,13 +40,21 @@ function start( dateSelected ) {
         make(df, el);
         el.append(df);
 
+        setTimeout( _ => el.classList.add('transit'), 0);
+
+        if (argObj.week) {
+            weekCalView();
+        } else {
+            calendarObjects.monthbtn.classList.add('selected');
+        }
+
         calendarObjects.weekbtn.addEventListener('click', weekCalView);
         calendarObjects.monthbtn.addEventListener('click', monthCalView);
 
         calendarObjects.leftBut.addEventListener('click', decMonth);
         calendarObjects.rightBut.addEventListener('click', incMonth);
 
-        calendarObjects.monthbtn.classList.add('selected');
+        
 
     }
 
@@ -128,13 +136,13 @@ function start( dateSelected ) {
 
             md.classList.add('calMonthDay');
 
-            md.addEventListener('click', dateSelected );
+            md.addEventListener('click', dateSelected);
 
             customDate.setDate(dateDif++);
 
             md.textContent = customDate.getDate();
 
-            md.custom_date = `${customDate.getDate()}/${customDate.getMonth()+1}/${customDate.getFullYear()}`;
+            md.custom_date = `${customDate.getDate()}/${customDate.getMonth() + 1}/${customDate.getFullYear()}`;
             md.custom_date_prop = customDate;
 
             if (customDate.getMonth() !== newDate.getMonth()) {
@@ -264,7 +272,7 @@ function start( dateSelected ) {
 
             el.textContent = customDate.getDate();
 
-            el.custom_date = `${customDate.getDate()}/${customDate.getMonth()+1}/${customDate.getFullYear()}`;
+            el.custom_date = `${customDate.getDate()}/${customDate.getMonth() + 1}/${customDate.getFullYear()}`;
 
             el.custom_date_prop = customDate;
 
@@ -293,9 +301,11 @@ function start( dateSelected ) {
 
         let calMonthCover = calendarObjects.calMonthCover;
         calendarObjects.weekbtn.classList.add('selected')
+        
         calendarObjects.monthbtn.classList.remove('selected');
 
         calMonthCover.parentElement.classList.add('weekview');       // changes view height
+
 
         calMonthCover.firstElementChild.classList.add('shoshoc', 'weekview');
 

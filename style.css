@@ -1,9 +1,20 @@
 
+:root{
+    --light : #def ;
+    --med : #456 ;
+    --dark : #234 ;
+    --textLight : whitesmoke ;
+    --textDark : #456 ;
+    --gray : #9ab ;
+    --form : #484865
+}
+
 *{
     box-sizing: border-box;
     /* font-family: 'Jost'; */
     font-family: 'MuseoModerno';
 }
+
 h1 , p , h2 , ul {
     margin: 0;
     padding: 0;
@@ -23,7 +34,7 @@ body > .todo-task-cover{
 }
 
 .cover{
-    background-color: #def ;
+    background-color: var(--light) ;
     height: 100vh;
     max-height: 100vh;
     border-radius: 1rem;
@@ -57,25 +68,20 @@ body > .todo-task-cover{
 }
 
 .heading-title{
-    color: #345;
+    color: var(--textDark) ;
 }
 
 .todoCover {
     width: 100%;
     flex-grow: 1;
-    /* max-height: 413px; */
-    /* flex-basis: 1; */
-    background-color: #345 ;
+    background-color: var(--med) ;
     border-radius: 1rem;
-    /* padding: 1rem ; */
-    /* padding-bottom: 6rem; */
     overflow: auto ;
     position: relative;
 }
 
 .todoTaskScreen {
     height: 100% ;
-    /* background-color: tomato; */
     border-radius: 1rem;
     overflow-y: scroll;
     padding: 1rem;
@@ -93,7 +99,6 @@ body > .todo-task-cover{
     border-radius: 1rem;
     opacity: 0;
     visibility: hidden;
-    /* transition: visibility 50ms linear 250ms , opacity 250ms ease ; */
 }
 
 .todoDarkScreen.show {
@@ -107,7 +112,8 @@ body > .todo-task-cover{
     width: 100%;
     height: 100%;
     border-radius: 1rem;
-    background-color: darkslategray ;
+    background-color: #263238 ;
+    background-color: var(--form);
     bottom: 0;
     left: 0;
     overflow: scroll ;
@@ -118,7 +124,6 @@ body > .todo-task-cover{
 
 .addTaskScreen.shrink {
     transform: scaleY(0) ;
-    /* transform: translateY(100%); */
 }
 
 .addTaskScreen::-webkit-scrollbar , .todoTaskScreen::-webkit-scrollbar {
@@ -136,7 +141,7 @@ body > .todo-task-cover{
 }
 
 .addTaskForm > form > div p {
-    color: whitesmoke ;
+    color: var(--textLight) ;
     margin: 0.5rem 0;
 }
 
@@ -147,7 +152,6 @@ body > .todo-task-cover{
 }
 
 .add-timings > input {
-    /* width: 100%; */
     font-family: 'MuseoModerno';
     padding: 0.5rem;
     border-radius: 0.25rem;
@@ -174,6 +178,7 @@ input[type="time"]{
 
 #editSelectedDate {
     cursor: pointer;
+    color: var(--textLight);
 }
 
 .add-title > input , .add-detail > textarea {
@@ -197,39 +202,27 @@ input[type="time"]{
     width: 36px;
     height: 36px;
     padding: 0.25rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end ;
-    justify-content: space-evenly ;
     cursor: pointer;
-}
-.h-s-menu{
-    width: 100%;
-    height: 4px;
-    border-radius: 1rem;
-    background-color: #345;
-}
-.hsm-a{
-    width: 60%;
 }
 
 .heading-setting > img {
     width: 100%;
     height: 100%;
     display: block;
+    pointer-events: none;
 }
 
 
 .todoHead {
     padding: 0rem 1rem ;
-    color: #def ;
+    color: var(--textLight) ;
 }
 
 .todo-tasks{
     margin-top: 1rem;
     padding: 0.1px ;
     flex-grow: 1;
-    color: #def;
+    color: var(--textLight) ;
 }
 
 .todo-task-cover{
@@ -242,7 +235,7 @@ input[type="time"]{
     padding: 1rem;
     border-radius: 1rem;
     /* border: 1px solid whitesmoke; */
-    background-color: #345 ;
+    background-color: var(--med) ;
     z-index: 2;
     transition: transform 0.4s cubic-bezier(0.02, 0.6, 0.51, 1.56) ;
 }
@@ -311,7 +304,7 @@ input[type="time"]{
     height: 5px;
     width: 40px;
     margin: 4px 0;
-    background-color: whitesmoke;
+    background-color: var(--textLight) ;
     border-radius: 2rem;
     transform-origin: left;
     transition: width 0.3s ease ;
@@ -343,7 +336,7 @@ input[type="time"]{
 }
 
 #addTaskBtn {
-    background-color: #abc ;
+    background-color: #cde ;
     right: 1rem;
     z-index: 6;
     transition: transform 0.3s ease , background 0.3s ease ;
@@ -360,7 +353,7 @@ input[type="time"]{
 }
 
 #addTaskBtn #addTaskSvg , #addTaskDoneBtn #addTaskDoneBtnSvg {
-    fill: #234;
+    fill: var(--dark) ;
 }
 
 #addTaskDoneBtn{
@@ -383,6 +376,6 @@ input[type="time"]{
     }   
 
     .todoTaskScreen , .addTaskScreen , .todoCover {
-        border-radius: 1rem 1rem 0 0;
+        border-radius: 1.5rem 1.5rem 0 0;
     }
 }

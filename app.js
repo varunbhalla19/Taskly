@@ -3,8 +3,10 @@ const todoDarkScreen = document.querySelector('.todoDarkScreen');
 const taskbeingAdded = { value: false, dateVal: new Date(), dateStr: dateToStr(new Date()), el: null, cover: false };
 
 const helper = {
-    selectedTaskDate: dateToStr(new Date()), today: dateToStr(new Date()), todayDate: new Date()
+    selectedTaskDate: dateToStr(new Date()), today: dateToStr(new Date()), todayDate: new Date() , theme : 1 
 }
+
+window['real-date'].textContent = helper.selectedTaskDate ;
 
 const moreOptions = document.querySelectorAll('.td-more');
 
@@ -37,6 +39,32 @@ const taskLists = {
     ]
 };
 
+function changeTheme ( ) {
+    let docStyl = document.documentElement.style ;
+    if(helper.theme) {
+        docStyl.setProperty('--light' , '#012' );
+        docStyl.setProperty('--textDark' , '#789' );
+        docStyl.setProperty('--gray' , '#345' );
+        docStyl.setProperty('--textLight' , '#89a' ) ;
+        docStyl.setProperty('--dark' , '#123' ) ;
+        docStyl.setProperty('--med' , '#234' ) ;
+        docStyl.setProperty('--form' , '#2f2f41' ) ;
+        this.firstElementChild.src = "sun.svg";
+        helper.theme = 0 ;
+    } else {
+        helper.theme = 1 ;
+        this.firstElementChild.src = "moon.svg";
+        docStyl.setProperty('--light' , '#def' );
+        docStyl.setProperty('--textDark' , '#456' );
+        docStyl.setProperty('--gray' , '#9ab' );
+        docStyl.setProperty('--textLight' , 'whitesmoke' ) ;
+        docStyl.setProperty('--dark' , '#234' ) ;
+        docStyl.setProperty('--med' , '#456' ) ;
+        docStyl.setProperty('--form' , '#484865' ) ;
+    }
+}
+
+themeChange.addEventListener('click' , changeTheme )
 
 // fetch('tasks.json').then(res => res.json()).then(console.log)
 
@@ -70,8 +98,7 @@ function dateSelected(ev, el) {
 
 
 
-calPick.create(dateSelected);
-calPick.showWeek();
+calPick.create( { evListener : dateSelected , week : true });
 
 function showMoreOptions(el) {
     el.firstElementChild.classList.toggle('short');
@@ -100,12 +127,15 @@ editSelectedDate.addEventListener('click', function (ev) {
 [taskTit, taskDet].forEach(el => el.addEventListener('focus', ev => dateDone(true)))
 
 function dateDone(fromInp) {
-    if (fromInp) {
-        todoDarkScreen.classList.add('show');
+    if (taskbeingAdded.value) {
+
+        if (fromInp) {
+            todoDarkScreen.classList.add('show');
+        }
+        calPick.showWeek();
+        taskbeingAdded.value = false;
+        editSelectedDate.textContent = 'Edit';
     }
-    calPick.showWeek();
-    taskbeingAdded.value = false;
-    editSelectedDate.textContent = 'Edit';
 }
 
 
@@ -186,7 +216,7 @@ addTaskDoneBtn.addEventListener('click', function (ev) {
 
     if (!(title.length && timeFrom && timeTo)) return;
 
-    if (((helper.today == taskbeingAdded.dateStr) && (timeFrom <= (`${(new Date()).getHours()}:${(new Date()).getMinutes()}`))) || (timeTo <= timeFrom)) {
+    if (((helper.today == taskbeingAdded.dateStr) && (timeFrom <= timeStr())) || (timeTo <= timeFrom)) {
         console.log('Invalid Time');
         timeSelectP.classList.add('invalid');
         return;
@@ -217,6 +247,19 @@ function dateToStr(date) {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 }
 
+function timeStr() {
+    let hrs = (new Date()).getHours();
+    let mins = (new Date()).getMinutes();
+
+    if (hrs < 10) {
+        hrs = `0${hrs}`;
+    }
+    if (mins < 10) {
+        mins = `0${mins}`;
+    }
+    return `${hrs}:${mins}`;
+
+}
 
 function sortByTime(ar) {
     ar.sort((a, b) => {
