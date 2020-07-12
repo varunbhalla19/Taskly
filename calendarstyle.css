@@ -161,7 +161,7 @@
 .today{
     border-radius: 50px;
     background-color: var(--med) ;
-    color: var(--light) ;
+    color: var(--textLight) ;
 }
 
 .gray {
